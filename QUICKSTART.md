@@ -60,10 +60,9 @@ Visit: [http://localhost:3000](http://localhost:3000)
 3. **Vendor** creates tasks and updates for that handle
 4. **Customer** receives updates in real-time - no login needed!
 
-### Test Vendor Flow:
-1. Go to `/dashboard`
-2. Sign in with Google
-3. Create a task:
+### Test Vendor Flow (Quick - No Auth):
+1. Go to `/dashboard-test` (no sign-in needed!)
+2. Create a task:
    - **Handle**: `john` (customer's unique identifier)
    - **Title**: "Car Service Update"
    - **Type**: "Info"
@@ -72,10 +71,11 @@ Visit: [http://localhost:3000](http://localhost:3000)
 5. Add updates to the task - customer sees them instantly!
 
 ### Test User Flow:
-1. Customer visits `/john` (no @ needed, or use `/@john`)
+1. Customer visits `/john` (or `/@john`)
 2. Sees all tasks assigned to handle "john"
-3. Watches updates appear in real-time
-4. No login required - just view tasks!
+3. Add an update from `/dashboard-test`
+4. Watch it appear instantly on `/john` - real-time! ⚡
+5. No login required for customers!
 
 ---
 

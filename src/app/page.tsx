@@ -15,15 +15,22 @@ export default function Home() {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
-            href="/dashboard"
+            href="/dashboard-test"
             className="px-8 py-4 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
           >
-            Vendor Dashboard
+            Quick Test (No Auth)
           </Link>
           <div className="text-navy-400">or</div>
-          <div className="text-navy-300 text-sm">
-            Visit <span className="text-brand-orange font-mono">/yourhandle</span> to see your updates
-          </div>
+          <Link
+            href="/dashboard"
+            className="px-8 py-4 bg-navy-800 hover:bg-navy-700 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+          >
+            Dashboard (With Auth)
+          </Link>
+        </div>
+        
+        <div className="pt-4 text-navy-400 text-xs">
+          Visit <span className="text-brand-orange font-mono">/yourhandle</span> to see customer updates
         </div>
         
         <div className="pt-8 text-navy-300 text-sm max-w-xl mx-auto">
