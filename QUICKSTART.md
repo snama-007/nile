@@ -31,7 +31,36 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 
 Get these from: Supabase → Settings → API
 
-### Step 4: Set Up Authentication (3 min)
+### Step 4: Fix RLS & Create Test Vendor (2 min)
+
+**Run this SQL in Supabase SQL Editor** to allow testing without auth:
+
+```sql
+-- Fix RLS policies for testing
+DROP POLICY IF EXISTS "Vendors can insert own tasks" ON tasks;
+DROP POLICY IF EXISTS "Vendors can insert updates for own tasks" ON updates;
+
+CREATE POLICY "Vendors can insert tasks"
+  ON tasks FOR INSERT
+  WITH CHECK (vendor_id IN (SELECT id FROM vendors));
+
+CREATE POLICY "Vendors can insert updates"
+  ON updates FOR INSERT
+  WITH CHECK (task_id IN (SELECT t.id FROM tasks t JOIN vendors v ON t.vendor_id = v.id));
+
+-- Create test vendor
+INSERT INTO vendors (id, user_id, name)
+VALUES (
+  '00000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000001',
+  'Test Vendor'
+)
+ON CONFLICT (id) DO UPDATE SET name = 'Test Vendor';
+```
+
+✅ Now `/dashboard-test` will work without authentication!
+
+### Step 5: Set Up Authentication (Optional - For Production)
 
 **For Development (Quick Test)**:
 - Auth is already configured for testing
@@ -42,8 +71,9 @@ Get these from: Supabase → Settings → API
 2. Enable Google OAuth
 3. Add OAuth credentials from Google Cloud Console
 4. Add authorized domains
+5. See `SUPABASE-SETUP.md` for details
 
-### Step 5: Run the App (1 min)
+### Step 6: Run the App (1 min)
 ```bash
 npm run dev
 ```
