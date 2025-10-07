@@ -19,10 +19,7 @@ npm install
    - Open Supabase Dashboard → SQL Editor
    - Copy contents from `supabase/schema.sql`
    - Run the SQL script
-
-3. **Enable Realtime**:
-   - Go to Database → Replication
-   - Toggle ON for `updates` table
+   - **Note**: Realtime is now automatically enabled in the schema with `ALTER PUBLICATION supabase_realtime ADD TABLE updates;`
 
 ### Step 3: Configure Environment (2 min)
 

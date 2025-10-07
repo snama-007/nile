@@ -99,5 +99,10 @@ CREATE POLICY "Vendors can insert updates for own tasks"
   );
 
 -- Enable Realtime for updates table
+-- This automatically enables real-time subscriptions for the updates table
 ALTER PUBLICATION supabase_realtime ADD TABLE updates;
+
+-- Verify Realtime is enabled:
+-- In Supabase Dashboard → Database → Replication
+-- The 'updates' table should show "Enabled" for Realtime
 
