@@ -2,10 +2,11 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
-import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Select } from '@/components/ui/Select'
+import { Input } from '@/components/ui/Input'
 import { Card, CardHeader, CardBody } from '@/components/ui/Card'
+import { HandleSearchInput } from '@/components/features/HandleSearchInput'
 import { taskTypeOptions } from '@/lib/utils/task-types'
 import { supabase } from '@/lib/supabase/client'
 
@@ -23,6 +24,7 @@ export function CreateTaskForm({ vendorId, onSuccess }: CreateTaskFormProps) {
     taskType: 'info',
     description: '',
   })
+  const [handleSelected, setHandleSelected] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -93,19 +95,30 @@ export function CreateTaskForm({ vendorId, onSuccess }: CreateTaskFormProps) {
             </div>
           )}
 
-          <Input
-            label="Customer Handle (Unique Identifier)"
-            placeholder="e.g., john123"
+          <HandleSearchInput
             value={formData.handle}
-            onChange={(e) =>
-              setFormData({ ...formData, handle: e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '') })
-            }
-            required
+            onChange={(value) => {
+              setFormData({ ...formData, handle: value })
+              setHandleSelected(false)
+            }}
+            onSelect={(handle) => {
+              setFormData({ ...formData, handle })
+              setHandleSelected(true)
+            }}
           />
-          {formData.handle && (
-            <p className="text-xs text-navy-500 mt-1">
-              ✓ Customer URL will be: <span className="font-mono text-brand-orange">/{ formData.handle}</span>
-            </p>
+          {formData.handle && handleSelected && (
+            <div className="p-3 bg-green-50 border border-green-200 rounded-lg -mt-3">
+              <p className="text-xs text-green-800">
+                ✓ Customer found! Updates will be sent to: <span className="font-mono text-brand-orange">/{formData.handle}</span>
+              </p>
+            </div>
+          )}
+          {formData.handle && !handleSelected && formData.handle.length >= 2 && (
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg -mt-3">
+              <p className="text-xs text-amber-800">
+                ⚠ Handle not found. Customer needs to create handle first, or you can create a task anyway.
+              </p>
+            </div>
           )}
 
           <Input

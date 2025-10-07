@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { CreateTaskForm } from '@/components/features/CreateTaskForm'
 import { TaskList } from '@/components/features/TaskList'
-import { Card, CardHeader, CardBody } from '@/components/ui/Card'
+import { Card, CardBody } from '@/components/ui/Card'
 import { Database } from '@/types/database.types'
 
 type Task = Database['public']['Tables']['tasks']['Row']

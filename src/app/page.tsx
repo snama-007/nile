@@ -1,6 +1,29 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
+import { CreateHandleForm } from '@/components/features/CreateHandleForm'
+import { Button } from '@/components/ui/Button'
 
 export default function Home() {
+  const [showCreateHandle, setShowCreateHandle] = useState(false)
+
+  if (showCreateHandle) {
+    return (
+      <main className="min-h-screen bg-navy-50 py-12 px-4">
+        <div className="max-w-md mx-auto">
+          <button
+            onClick={() => setShowCreateHandle(false)}
+            className="mb-4 text-navy-600 hover:text-navy-900 flex items-center gap-2"
+          >
+            ← Back to home
+          </button>
+          <CreateHandleForm onSuccess={() => setShowCreateHandle(false)} />
+        </div>
+      </main>
+    )
+  }
+
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900">
       <div className="text-center space-y-8 px-4">
@@ -29,16 +52,23 @@ export default function Home() {
           </Link>
         </div>
         
-        <div className="pt-4 text-navy-400 text-xs">
-          Visit <span className="text-brand-orange font-mono">/yourhandle</span> to see customer updates
+        <div className="pt-6">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => setShowCreateHandle(true)}
+            className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+          >
+            🎯 Create My Personal Handle
+          </Button>
         </div>
         
         <div className="pt-8 text-navy-300 text-sm max-w-xl mx-auto">
           <p className="mb-2">💡 <strong>How it works:</strong></p>
           <ul className="text-left space-y-2 text-xs">
-            <li>• Vendors assign a unique handle to each customer</li>
-            <li>• Customers visit their handle URL (e.g., <span className="text-brand-orange font-mono">/john</span>)</li>
-            <li>• Updates appear in real-time - no login required!</li>
+            <li>• <strong>Customers:</strong> Create a handle to receive updates</li>
+            <li>• <strong>Vendors:</strong> Search for customer handles and send updates</li>
+            <li>• <strong>Real-time:</strong> Updates appear instantly - no login required!</li>
           </ul>
         </div>
 
