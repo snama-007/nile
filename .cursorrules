@@ -1,0 +1,21 @@
+# Project Nile - Cursor Rules
+
+## Design System
+- Colors: Navy (#0F172A) + Orange (#F97316)
+- Typography: Inter font, clean and minimal
+- Mobile-first responsive design
+- Smooth animations and transitions
+
+## Code Style
+- TypeScript strict mode
+- Functional components with hooks
+- Modular architecture
+- Clear component separation (ui vs features)
+
+## Best Practices
+- Use Tailwind CSS utility classes
+- Maintain consistent spacing and sizing
+- Implement proper error handling
+- Add loading states for async operations
+- Follow accessibility guidelines
+
