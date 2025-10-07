@@ -1,18 +1,17 @@
 -- Complete test vendor setup
 -- Run this in Supabase SQL Editor to set up testing without authentication
 
--- 1. Create test user in auth.users (optional, for reference)
--- Note: This might fail if auth.users is not directly accessible
--- That's okay - we can work without it
-
--- 2. Create test vendor
+-- 1. Create a test vendor with a consistent user_id
+-- All tasks created by this vendor will have the same vendor_id
 INSERT INTO vendors (id, user_id, name)
 VALUES (
-  '00000000-0000-0000-0000-000000000001',
-  '00000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000001', -- vendor_id
+  '11111111-1111-1111-1111-111111111111', -- user_id (consistent)
   'Test Vendor'
 )
-ON CONFLICT (id) DO UPDATE SET name = 'Test Vendor';
+ON CONFLICT (id) DO UPDATE SET 
+  user_id = '11111111-1111-1111-1111-111111111111',
+  name = 'Test Vendor';
 
 -- 3. Verify vendor was created
 SELECT * FROM vendors WHERE id = '00000000-0000-0000-0000-000000000001';

@@ -48,14 +48,16 @@ CREATE POLICY "Vendors can insert updates"
   ON updates FOR INSERT
   WITH CHECK (task_id IN (SELECT t.id FROM tasks t JOIN vendors v ON t.vendor_id = v.id));
 
--- Create test vendor
+-- Create test vendor with consistent user_id
 INSERT INTO vendors (id, user_id, name)
 VALUES (
-  '00000000-0000-0000-0000-000000000001',
-  '00000000-0000-0000-0000-000000000001',
+  '00000000-0000-0000-0000-000000000001', -- vendor_id (used in dashboard-test)
+  '11111111-1111-1111-1111-111111111111', -- user_id (consistent for all tasks)
   'Test Vendor'
 )
-ON CONFLICT (id) DO UPDATE SET name = 'Test Vendor';
+ON CONFLICT (id) DO UPDATE SET 
+  user_id = '11111111-1111-1111-1111-111111111111',
+  name = 'Test Vendor';
 ```
 
 ✅ Now `/dashboard-test` will work without authentication!

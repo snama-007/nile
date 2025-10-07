@@ -1,6 +1,9 @@
 -- Fix RLS policies to allow test vendor and better handle creation
 -- Run this in Supabase SQL Editor
 
+-- IMPORTANT: This allows testing without authentication
+-- For production, you should use proper auth policies
+
 -- Drop existing restrictive policies
 DROP POLICY IF EXISTS "Vendors can insert own tasks" ON tasks;
 DROP POLICY IF EXISTS "Vendors can update own tasks" ON tasks;
