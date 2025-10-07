@@ -31,36 +31,41 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 
 Get these from: Supabase → Settings → API
 
-### Step 4: Fix RLS & Create Test Vendor (2 min)
+### Step 4: Quick Test Setup (1 min)
 
-**Run this SQL in Supabase SQL Editor** to allow testing without auth:
+**Run this SQL in Supabase SQL Editor** - easiest way to test:
 
 ```sql
--- Fix RLS policies for testing
-DROP POLICY IF EXISTS "Vendors can insert own tasks" ON tasks;
-DROP POLICY IF EXISTS "Vendors can insert updates for own tasks" ON updates;
+-- QUICK FIX: Disable RLS for testing (re-enable for production!)
+ALTER TABLE vendors DISABLE ROW LEVEL SECURITY;
+ALTER TABLE users_public DISABLE ROW LEVEL SECURITY;
+ALTER TABLE tasks DISABLE ROW LEVEL SECURITY;
+ALTER TABLE updates DISABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Vendors can insert tasks"
-  ON tasks FOR INSERT
-  WITH CHECK (vendor_id IN (SELECT id FROM vendors));
-
-CREATE POLICY "Vendors can insert updates"
-  ON updates FOR INSERT
-  WITH CHECK (task_id IN (SELECT t.id FROM tasks t JOIN vendors v ON t.vendor_id = v.id));
-
--- Create test vendor with consistent user_id
+-- Create test vendor
 INSERT INTO vendors (id, user_id, name)
 VALUES (
-  '00000000-0000-0000-0000-000000000001', -- vendor_id (used in dashboard-test)
-  '11111111-1111-1111-1111-111111111111', -- user_id (consistent for all tasks)
+  '00000000-0000-0000-0000-000000000001',
+  '11111111-1111-1111-1111-111111111111',
   'Test Vendor'
 )
-ON CONFLICT (id) DO UPDATE SET 
-  user_id = '11111111-1111-1111-1111-111111111111',
-  name = 'Test Vendor';
+ON CONFLICT (id) DO UPDATE SET name = 'Test Vendor';
+
+-- Create test handles
+INSERT INTO users_public (handle, name)
+VALUES ('demo', 'Demo User'), ('john', 'John Doe')
+ON CONFLICT (handle) DO UPDATE SET name = EXCLUDED.name;
 ```
 
-✅ Now `/dashboard-test` will work without authentication!
+✅ Now `/dashboard-test` will work perfectly!
+
+⚠️ **Important:** Re-enable RLS before production:
+```sql
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE updates ENABLE ROW LEVEL SECURITY;
+```
+
+**Alternative:** Use `supabase/complete-test-setup.sql` for detailed setup
 
 ### Step 5: Set Up Authentication (Optional - For Production)
 
