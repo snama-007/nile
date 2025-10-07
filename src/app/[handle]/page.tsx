@@ -10,6 +10,9 @@ import { Database } from '@/types/database.types'
 type Task = Database['public']['Tables']['tasks']['Row']
 type Update = Database['public']['Tables']['updates']['Row']
 
+// Force dynamic rendering to avoid build-time Supabase errors
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: {
     handle: string

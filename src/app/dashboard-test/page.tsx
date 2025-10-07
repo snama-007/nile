@@ -10,6 +10,9 @@ import { Database } from '@/types/database.types'
 type Task = Database['public']['Tables']['tasks']['Row']
 type Update = Database['public']['Tables']['updates']['Row']
 
+// Force dynamic rendering to avoid build-time Supabase errors
+export const dynamic = 'force-dynamic'
+
 // Test vendor ID - matches the one in SQL setup
 const TEST_VENDOR_ID = '00000000-0000-0000-0000-000000000001'
 

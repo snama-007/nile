@@ -4,6 +4,9 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { CreateHandleForm } from '@/components/features/CreateHandleForm'
 
+// Force dynamic rendering to avoid build-time Supabase errors
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   const [showCreateHandle, setShowCreateHandle] = useState(false)
 

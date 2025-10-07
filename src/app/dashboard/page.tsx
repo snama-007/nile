@@ -12,6 +12,9 @@ import { Database } from '@/types/database.types'
 type Task = Database['public']['Tables']['tasks']['Row']
 type Update = Database['public']['Tables']['updates']['Row']
 
+// Force dynamic rendering to avoid build-time Supabase errors
+export const dynamic = 'force-dynamic'
+
 export default function DashboardPage() {
   const [user, setUser] = useState<User | null>(null)
   const [vendorId, setVendorId] = useState<string | null>(null)
