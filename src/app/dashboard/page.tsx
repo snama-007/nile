@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/Button'
 import { CreateTaskForm } from '@/components/features/CreateTaskForm'
@@ -20,86 +20,7 @@ export default function DashboardPage() {
   const [updates, setUpdates] = useState<Record<string, Update[]>>({})
   const [refreshKey, setRefreshKey] = useState(0)
 
-  useEffect(() => {
-    checkUser()
-  }, [])
-
-  useEffect(() => {
-    if (vendorId) {
-      loadTasks()
-      subscribeToRealtime()
-    }
-  }, [vendorId, refreshKey])
-
-  const subscribeToRealtime = () => {
-    // Subscribe to updates table changes
-    const channel = supabase
-      .channel('vendor-updates')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'updates',
-        },
-        (payload) => {
-          // Reload tasks when new update is added
-          loadTasks()
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'tasks',
-        },
-        (payload) => {
-          // Reload tasks when new task is created
-          loadTasks()
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }
-
-  const checkUser = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser()
-
-    if (user) {
-      setUser(user)
-      // Get or create vendor profile
-      let { data: vendor } = await supabase
-        .from('vendors')
-        .select('id')
-        .eq('user_id', user.id)
-        .single()
-
-      if (!vendor) {
-        const { data: newVendor, error } = await supabase
-          .from('vendors')
-          .insert({ user_id: user.id, name: user.email || 'Vendor' } as any)
-          .select('id')
-          .single()
-
-        if (!error && newVendor) {
-          vendor = newVendor
-        }
-      }
-
-      if (vendor && 'id' in vendor) {
-        setVendorId((vendor as {id: string}).id)
-      }
-    }
-    setLoading(false)
-  }
-
-  const loadTasks = async () => {
+  const loadTasks = useCallback(async () => {
     if (!vendorId) return
 
     const { data: tasksData } = await supabase
@@ -126,6 +47,87 @@ export default function DashboardPage() {
       }
       setUpdates(updatesMap)
     }
+  }, [vendorId])
+
+  const subscribeToRealtime = useCallback(() => {
+    // Subscribe to updates table changes
+    const channel = supabase
+      .channel('vendor-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'updates',
+        },
+        () => {
+          // Reload tasks when new update is added
+          loadTasks()
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'tasks',
+        },
+        () => {
+          // Reload tasks when new task is created
+          loadTasks()
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [loadTasks])
+
+  useEffect(() => {
+    checkUser()
+  }, [])
+
+  useEffect(() => {
+    if (vendorId) {
+      loadTasks()
+      const cleanup = subscribeToRealtime()
+      return cleanup
+    }
+  }, [vendorId, refreshKey, loadTasks, subscribeToRealtime])
+
+  const checkUser = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    if (user) {
+      setUser(user)
+      // Get or create vendor profile
+      let { data: vendor } = await supabase
+        .from('vendors')
+        .select('id')
+        .eq('user_id', user.id)
+        .single()
+
+      if (!vendor) {
+        const { data: newVendor, error } = await supabase
+          .from('vendors')
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .insert({ user_id: user.id, name: user.email || 'Vendor' } as any)
+          .select('id')
+          .single()
+
+        if (!error && newVendor) {
+          vendor = newVendor
+        }
+      }
+
+      if (vendor && 'id' in vendor) {
+        setVendorId((vendor as {id: string}).id)
+      }
+    }
+    setLoading(false)
   }
 
   const handleSignIn = async () => {

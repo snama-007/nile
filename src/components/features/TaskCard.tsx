@@ -50,7 +50,7 @@ export function TaskCard({ task, updates = [], showHandle = false }: TaskCardPro
               </p>
             )}
           </div>
-          <Badge variant={taskConfig.color as any} icon={taskConfig.icon}>
+          <Badge variant={taskConfig.color as 'default' | 'info' | 'success' | 'warning' | 'error' | 'orange'} icon={taskConfig.icon}>
             {taskConfig.label}
           </Badge>
         </div>

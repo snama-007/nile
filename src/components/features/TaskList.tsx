@@ -43,7 +43,7 @@ export function TaskList({ tasks, updates, onUpdateAdded }: TaskListProps) {
       const { error } = await supabase.from('updates').insert({
         task_id: taskId,
         message: updateMessage.trim(),
-      } as any)
+      } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 
       if (error) throw error
 
@@ -88,7 +88,7 @@ export function TaskList({ tasks, updates, onUpdateAdded }: TaskListProps) {
                     @{task.user_handle}
                   </p>
                 </div>
-                <Badge variant={taskConfig.color as any} icon={taskConfig.icon}>
+                <Badge variant={taskConfig.color as 'default' | 'info' | 'success' | 'warning' | 'error' | 'orange'} icon={taskConfig.icon}>
                   {taskConfig.label}
                 </Badge>
               </div>

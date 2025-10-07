@@ -40,6 +40,7 @@ export function CreateTaskForm({ vendorId, onSuccess }: CreateTaskFormProps) {
       if (!existingUser) {
         const { error: userError } = await supabase
           .from('users_public')
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .insert({ handle: formData.handle, name: formData.handle } as any)
 
         if (userError) throw userError
@@ -53,7 +54,7 @@ export function CreateTaskForm({ vendorId, onSuccess }: CreateTaskFormProps) {
         vendor_id: vendorId,
         task_type: formData.taskType,
         status: 'created',
-      } as any)
+      } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 
       if (taskError) throw taskError
 
@@ -66,8 +67,8 @@ export function CreateTaskForm({ vendorId, onSuccess }: CreateTaskFormProps) {
       })
 
       onSuccess?.()
-    } catch (err: any) {
-      setError(err.message || 'Failed to create task')
+    } catch (err) {
+      setError((err as Error).message || 'Failed to create task')
     } finally {
       setLoading(false)
     }

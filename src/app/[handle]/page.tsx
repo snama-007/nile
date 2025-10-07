@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { TaskCard } from '@/components/features/TaskCard'
-import { LoadingScreen, Loading } from '@/components/ui/Loading'
+import { LoadingScreen } from '@/components/ui/Loading'
 import Link from 'next/link'
 import { Database } from '@/types/database.types'
 
@@ -25,12 +25,7 @@ export default function UserFeedPage({ params }: PageProps) {
   const [loading, setLoading] = useState(true)
   const [userExists, setUserExists] = useState(false)
 
-  useEffect(() => {
-    loadUserFeed()
-    subscribeToUpdates()
-  }, [handle])
-
-  const loadUserFeed = async () => {
+  const loadUserFeed = useCallback(async () => {
     setLoading(true)
 
     // Check if user exists
@@ -75,9 +70,9 @@ export default function UserFeedPage({ params }: PageProps) {
     }
 
     setLoading(false)
-  }
+  }, [handle])
 
-  const subscribeToUpdates = () => {
+  const subscribeToUpdates = useCallback(() => {
     const channel = supabase
       .channel('public-updates')
       .on(
@@ -87,7 +82,7 @@ export default function UserFeedPage({ params }: PageProps) {
           schema: 'public',
           table: 'updates',
         },
-        (payload) => {
+        () => {
           // Reload data when new update is inserted
           loadUserFeed()
         }
@@ -97,7 +92,13 @@ export default function UserFeedPage({ params }: PageProps) {
     return () => {
       supabase.removeChannel(channel)
     }
-  }
+  }, [loadUserFeed])
+
+  useEffect(() => {
+    loadUserFeed()
+    const cleanup = subscribeToUpdates()
+    return cleanup
+  }, [loadUserFeed, subscribeToUpdates])
 
   if (loading) {
     return <LoadingScreen />
@@ -110,7 +111,7 @@ export default function UserFeedPage({ params }: PageProps) {
           <div className="text-6xl mb-4">🔍</div>
           <h1 className="text-4xl font-bold text-white">Handle Not Found</h1>
           <p className="text-xl text-navy-300">
-            @{handle} doesn't exist yet
+            @{handle} doesn&apos;t exist yet
           </p>
           <Link href="/">
             <span className="inline-block mt-4 text-brand-orange hover:text-brand-orange-light underline">
@@ -148,7 +149,7 @@ export default function UserFeedPage({ params }: PageProps) {
               No Active Tasks
             </h2>
             <p className="text-navy-600">
-              You'll see service updates here when they're available
+              You&apos;ll see service updates here when they&apos;re available
             </p>
           </div>
         ) : (
