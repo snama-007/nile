@@ -13,8 +13,8 @@ type Update = Database['public']['Tables']['updates']['Row']
 // Force dynamic rendering to avoid build-time Supabase errors
 export const dynamic = 'force-dynamic'
 
-// Test vendor ID - matches the one in SQL setup
-const TEST_VENDOR_ID = '00000000-0000-0000-0000-000000000001'
+// Test vendor ID - will be generated with real UUID
+const TEST_VENDOR_ID = 'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b' // Realistic UUID for demo vendor
 
 export default function DashboardTestPage() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -37,13 +37,13 @@ export default function DashboardTestPage() {
         .single()
 
       if (!existingVendor) {
-        // Create test vendor if doesn't exist
+        // Create demo vendor if doesn't exist
         const { error } = await supabase
           .from('vendors')
           .insert({
             id: TEST_VENDOR_ID,
-            user_id: '11111111-1111-1111-1111-111111111111',
-            name: 'Test Vendor'
+            user_id: 'a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6', // Demo user ID
+            name: 'Demo Service Provider'
           } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
 
         if (error) {
@@ -144,10 +144,10 @@ export default function DashboardTestPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div>
             <h1 className="text-2xl font-bold text-navy-900">
-              Nile Dashboard - Test Mode
+              Nile Dashboard - Demo Mode
             </h1>
             <p className="text-sm text-navy-600">
-              Testing without authentication • Vendor ID: {TEST_VENDOR_ID}
+              Demo Service Provider • Quick testing without authentication
             </p>
           </div>
         </div>
@@ -161,11 +161,12 @@ export default function DashboardTestPage() {
               <div className="text-2xl">ℹ️</div>
               <div className="flex-1">
                 <h3 className="font-semibold text-navy-900 mb-1">
-                  Test Mode Active
+                  Demo Mode Active
                 </h3>
                 <p className="text-sm text-navy-600">
-                  This page bypasses authentication for quick testing. Create tasks and updates
-                  without needing to sign in. For production, use <code className="bg-navy-100 px-1 py-0.5 rounded">/dashboard</code> with OAuth.
+                  You&apos;re logged in as <strong>Demo Service Provider</strong>. Create tasks and updates
+                  without authentication. For production with your business name, use{' '}
+                  <code className="bg-navy-100 px-1 py-0.5 rounded">/dashboard</code> with sign-in.
                 </p>
               </div>
             </div>
