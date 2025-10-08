@@ -136,8 +136,199 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Use Cases Section */}
+          <div className="pt-16 max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-glass-beige-800 mb-8">
+              Perfect for Modern Businesses
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-5 bg-white/40 backdrop-blur-xl rounded-xl border border-white/20 hover:bg-white/60 transition-all duration-300">
+                <div className="text-3xl mb-3">🐕</div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Pet Services</h4>
+                <p className="text-sm text-glass-beige-700">Grooming, vet appointments, boarding updates</p>
+              </div>
+              
+              <div className="p-5 bg-white/40 backdrop-blur-xl rounded-xl border border-white/20 hover:bg-white/60 transition-all duration-300">
+                <div className="text-3xl mb-3">🔧</div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Auto Repair</h4>
+                <p className="text-sm text-glass-beige-700">Service status, part arrivals, pickup ready</p>
+              </div>
+              
+              <div className="p-5 bg-white/40 backdrop-blur-xl rounded-xl border border-white/20 hover:bg-white/60 transition-all duration-300">
+                <div className="text-3xl mb-3">🍕</div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Food Delivery</h4>
+                <p className="text-sm text-glass-beige-700">Order prep, cooking, delivery tracking</p>
+              </div>
+              
+              <div className="p-5 bg-white/40 backdrop-blur-xl rounded-xl border border-white/20 hover:bg-white/60 transition-all duration-300">
+                <div className="text-3xl mb-3">📦</div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Package Delivery</h4>
+                <p className="text-sm text-glass-beige-700">Shipping updates, customs, last mile</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Benefits Section */}
+          <div className="pt-16 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Pros */}
+              <div className="p-6 bg-white/50 backdrop-blur-xl rounded-2xl border border-white/20">
+                <h3 className="text-2xl font-bold text-glass-green-700 mb-4 flex items-center gap-2">
+                  <span>✅</span> Why Choose Nile
+                </h3>
+                <ul className="space-y-3 text-sm text-glass-beige-800">
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>No app download</strong> - Works in any browser</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Zero login hassle</strong> - Customers don&apos;t need accounts</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Real-time updates</strong> - Instant notifications (sub-second)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Simple sharing</strong> - Just share a link (/yourhandle)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Mobile friendly</strong> - Beautiful on all devices</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Free to start</strong> - No setup fees or subscriptions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Reduces calls/texts</strong> - Proactive communication</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">•</span>
+                    <span><strong>Professional image</strong> - Modern tech-savvy business</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Considerations */}
+              <div className="p-6 bg-white/50 backdrop-blur-xl rounded-2xl border border-white/20">
+                <h3 className="text-2xl font-bold text-glass-orange-700 mb-4 flex items-center gap-2">
+                  <span>💡</span> Good to Know
+                </h3>
+                <ul className="space-y-3 text-sm text-glass-beige-800">
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-orange-600 mt-0.5">•</span>
+                    <span><strong>Internet required</strong> - Needs connection for real-time</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-orange-600 mt-0.5">•</span>
+                    <span><strong>Public links</strong> - Anyone with link can view updates</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-orange-600 mt-0.5">•</span>
+                    <span><strong>Handle-based</strong> - Customers need to remember their handle</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-orange-600 mt-0.5">•</span>
+                    <span><strong>Best for updates</strong> - Not for two-way chat</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">✓</span>
+                    <span><strong>Privacy by design</strong> - Only handle owner sees tasks</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">✓</span>
+                    <span><strong>Scalable</strong> - Handles thousands of customers</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">✓</span>
+                    <span><strong>Quick setup</strong> - 5 minutes to start</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-glass-green-600 mt-0.5">✓</span>
+                    <span><strong>No maintenance</strong> - Cloud-hosted infrastructure</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* How It Works Section */}
+          <div className="pt-16 max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-glass-beige-800 mb-8">
+              How It Works
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-glass-orange-400 to-glass-orange-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  1
+                </div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Customer Creates Handle</h4>
+                <p className="text-sm text-glass-beige-700">
+                  Click &quot;Create Handle&quot; and get a unique URL like <span className="font-mono text-glass-orange-600">/alice</span>
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-glass-green-400 to-glass-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  2
+                </div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Share with Vendor</h4>
+                <p className="text-sm text-glass-beige-700">
+                  Give your handle to service providers. They search and find you instantly.
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-glass-beige-400 to-glass-beige-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                  3
+                </div>
+                <h4 className="font-bold text-glass-beige-800 mb-2">Receive Updates</h4>
+                <p className="text-sm text-glass-beige-700">
+                  Visit your URL anytime to see all tasks and updates from your vendors.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Section */}
+          <div className="pt-16 max-w-4xl mx-auto">
+            <div className="p-8 bg-white/50 backdrop-blur-xl rounded-2xl border border-white/20">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-glass-orange-600 mb-1">
+                    &lt;1s
+                  </div>
+                  <div className="text-sm text-glass-beige-700">Update Latency</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-glass-green-600 mb-1">
+                    0
+                  </div>
+                  <div className="text-sm text-glass-beige-700">Login Required</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-glass-beige-700 mb-1">
+                    100%
+                  </div>
+                  <div className="text-sm text-glass-beige-700">Mobile Ready</div>
+                </div>
+                <div>
+                  <div className="text-3xl md:text-4xl font-bold text-glass-orange-600 mb-1">
+                    Free
+                  </div>
+                  <div className="text-sm text-glass-beige-700">To Get Started</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Floating info badges */}
-          <div className="pt-8 flex flex-wrap justify-center gap-3">
+          <div className="pt-12 flex flex-wrap justify-center gap-3">
             <div className="px-4 py-2 bg-white/50 backdrop-blur-xl rounded-full border border-white/20 text-glass-beige-700 text-sm font-medium animate-float">
               🎨 Beautiful Design
             </div>
@@ -149,6 +340,9 @@ export default function Home() {
             </div>
             <div className="px-4 py-2 bg-white/50 backdrop-blur-xl rounded-full border border-white/20 text-glass-beige-700 text-sm font-medium animate-float-delayed">
               📱 Mobile First
+            </div>
+            <div className="px-4 py-2 bg-white/50 backdrop-blur-xl rounded-full border border-white/20 text-glass-beige-700 text-sm font-medium animate-float">
+              🌍 Works Anywhere
             </div>
           </div>
         </div>

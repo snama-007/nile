@@ -32,17 +32,6 @@ export function CreateTaskForm({ vendorId, onSuccess }: CreateTaskFormProps) {
     setError(null)
 
     try {
-      // Verify vendor exists first
-      const { data: vendorExists } = await supabase
-        .from('vendors')
-        .select('id')
-        .eq('id', vendorId)
-        .single()
-
-      if (!vendorExists) {
-        throw new Error('Vendor not found. Please refresh the page and try again.')
-      }
-
       // Check if user handle exists, if not create it
       const { data: existingUser } = await supabase
         .from('users_public')
