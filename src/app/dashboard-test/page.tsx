@@ -29,32 +29,44 @@ export default function DashboardTestPage() {
 
   const initializeVendor = async () => {
     try {
-      // Check if test vendor exists
-      const { data: existingVendor } = await supabase
+      // Check if demo vendor exists
+      const { data: existingVendor, error: fetchError } = await supabase
         .from('vendors')
         .select('id')
         .eq('id', TEST_VENDOR_ID)
-        .single()
+        .maybeSingle() // Use maybeSingle instead of single to avoid error if not found
 
-      if (!existingVendor) {
+      console.log('Checking for vendor:', TEST_VENDOR_ID)
+      console.log('Existing vendor:', existingVendor)
+
+      if (!existingVendor && !fetchError) {
         // Create demo vendor if doesn't exist
-        const { error } = await supabase
+        console.log('Creating demo vendor...')
+        const { data: newVendor, error: insertError } = await supabase
           .from('vendors')
           .insert({
             id: TEST_VENDOR_ID,
-            user_id: 'a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6', // Demo user ID
+            user_id: 'a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6',
             name: 'Demo Service Provider'
           } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+          .select()
+          .single()
 
-        if (error) {
-          console.error('Error creating vendor:', error)
+        if (insertError) {
+          console.error('Error creating vendor:', insertError)
+          alert(`Failed to create vendor: ${insertError.message}. Please run the SQL setup from QUICKSTART.md`)
+        } else {
+          console.log('Demo vendor created successfully:', newVendor)
         }
+      } else {
+        console.log('Demo vendor already exists')
       }
       
       setVendorReady(true)
     } catch (error) {
       console.error('Vendor initialization error:', error)
-      setVendorReady(true) // Continue anyway
+      alert('Vendor setup failed. Please check browser console and run SQL from QUICKSTART.md')
+      setVendorReady(true) // Continue anyway to show the UI
     }
   }
 
