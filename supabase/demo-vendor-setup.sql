@@ -17,12 +17,12 @@ ALTER TABLE updates DISABLE ROW LEVEL SECURITY;
 -- Realistic vendor with proper UUIDs
 INSERT INTO vendors (id, user_id, name)
 VALUES (
-  'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b', -- Demo vendor ID (realistic UUID)
-  'a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6', -- Demo user ID (realistic UUID)
+  'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b', -- Demo vendor ID (valid UUID)
+  'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d', -- Demo user ID (valid UUID)
   'Demo Service Provider'
 )
 ON CONFLICT (id) DO UPDATE SET 
-  user_id = 'a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6',
+  user_id = 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
   name = 'Demo Service Provider';
 
 -- ========================================

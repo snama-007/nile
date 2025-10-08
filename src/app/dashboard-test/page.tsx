@@ -13,8 +13,9 @@ type Update = Database['public']['Tables']['updates']['Row']
 // Force dynamic rendering to avoid build-time Supabase errors
 export const dynamic = 'force-dynamic'
 
-// Test vendor ID - will be generated with real UUID
-const TEST_VENDOR_ID = 'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b' // Realistic UUID for demo vendor
+// Demo vendor - realistic UUIDs for testing
+const TEST_VENDOR_ID = 'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b'
+const TEST_USER_ID = 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d' // Valid UUID format
 
 export default function DashboardTestPage() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -46,7 +47,7 @@ export default function DashboardTestPage() {
           .from('vendors')
           .insert({
             id: TEST_VENDOR_ID,
-            user_id: 'a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6',
+            user_id: TEST_USER_ID,
             name: 'Demo Service Provider'
           } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
           .select()

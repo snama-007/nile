@@ -19,13 +19,13 @@ ALTER TABLE updates DISABLE ROW LEVEL SECURITY;
 
 INSERT INTO vendors (id, user_id, name)
 VALUES (
-  '00000000-0000-0000-0000-000000000001',
-  '11111111-1111-1111-1111-111111111111',
-  'Test Vendor'
+  'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b',
+  'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
+  'Demo Service Provider'
 )
 ON CONFLICT (id) DO UPDATE SET 
-  user_id = '11111111-1111-1111-1111-111111111111',
-  name = 'Test Vendor';
+  user_id = 'a1b2c3d4-5e6f-7a8b-9c0d-1e2f3a4b5c6d',
+  name = 'Demo Service Provider';
 
 -- ========================================
 -- STEP 3: Create Test Handles
@@ -72,14 +72,14 @@ ON CONFLICT DO NOTHING;
 
 -- Check vendor exists
 SELECT 'Vendor Created:' as status, * FROM vendors 
-WHERE id = '00000000-0000-0000-0000-000000000001';
+WHERE id = 'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b';
 
 -- Check handles exist
 SELECT 'Handles Created:' as status, * FROM users_public LIMIT 5;
 
 -- Check tasks (if any)
 SELECT 'Tasks:' as status, COUNT(*) as count FROM tasks 
-WHERE vendor_id = '00000000-0000-0000-0000-000000000001';
+WHERE vendor_id = 'b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b';
 
 -- Check RLS status
 SELECT 
@@ -99,10 +99,11 @@ WHERE tablename IN ('vendors', 'users_public', 'tasks', 'updates')
 
 DO $$
 BEGIN
-  RAISE NOTICE '✅ Test setup complete!';
+  RAISE NOTICE '✅ Demo vendor setup complete!';
   RAISE NOTICE '';
-  RAISE NOTICE 'Test Vendor ID: 00000000-0000-0000-0000-000000000001';
-  RAISE NOTICE 'Test Handles: demo, john, jane';
+  RAISE NOTICE 'Demo Vendor: Demo Service Provider';
+  RAISE NOTICE 'Vendor ID: b8f3e7a2-4c9d-4e1a-8f2b-3d6c9a1e5f4b';
+  RAISE NOTICE 'Sample Handles: demo, john, jane';
   RAISE NOTICE '';
   RAISE NOTICE '🚀 You can now:';
   RAISE NOTICE '1. Visit /dashboard-test to create tasks';
