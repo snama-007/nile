@@ -31,41 +31,28 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
 
 Get these from: Supabase → Settings → API
 
-### Step 4: Quick Test Setup (1 min)
+### Step 4: Disable RLS for Testing (30 seconds)
 
-**Run this SQL in Supabase SQL Editor** - easiest way to test:
+**Run this SQL in Supabase SQL Editor:**
 
 ```sql
--- QUICK FIX: Disable RLS for testing (re-enable for production!)
+-- DISABLE RLS FOR TESTING (re-enable for production!)
 ALTER TABLE vendors DISABLE ROW LEVEL SECURITY;
 ALTER TABLE users_public DISABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks DISABLE ROW LEVEL SECURITY;
 ALTER TABLE updates DISABLE ROW LEVEL SECURITY;
+```
 
--- Create test vendor
-INSERT INTO vendors (id, user_id, name)
-VALUES (
-  '00000000-0000-0000-0000-000000000001',
-  '11111111-1111-1111-1111-111111111111',
-  'Test Vendor'
-)
-ON CONFLICT (id) DO UPDATE SET name = 'Test Vendor';
+That's it! The app will auto-create the test vendor when you visit `/dashboard-test`.
 
--- Create test handles
+⚠️ **Important:** Re-enable RLS before production (see `supabase/enable-rls-production.sql`)
+
+**Optional:** Create sample handles:
+```sql
 INSERT INTO users_public (handle, name)
 VALUES ('demo', 'Demo User'), ('john', 'John Doe')
 ON CONFLICT (handle) DO UPDATE SET name = EXCLUDED.name;
 ```
-
-✅ Now `/dashboard-test` will work perfectly!
-
-⚠️ **Important:** Re-enable RLS before production:
-```sql
-ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
-ALTER TABLE updates ENABLE ROW LEVEL SECURITY;
-```
-
-**Alternative:** Use `supabase/complete-test-setup.sql` for detailed setup
 
 ### Step 5: Set Up Authentication (Optional - For Production)
 

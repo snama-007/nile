@@ -20,6 +20,43 @@ export default function DashboardTestPage() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [updates, setUpdates] = useState<Record<string, Update[]>>({})
   const [refreshKey, setRefreshKey] = useState(0)
+  const [vendorReady, setVendorReady] = useState(false)
+
+  // Initialize vendor on first load
+  useEffect(() => {
+    initializeVendor()
+  }, [])
+
+  const initializeVendor = async () => {
+    try {
+      // Check if test vendor exists
+      const { data: existingVendor } = await supabase
+        .from('vendors')
+        .select('id')
+        .eq('id', TEST_VENDOR_ID)
+        .single()
+
+      if (!existingVendor) {
+        // Create test vendor if doesn't exist
+        const { error } = await supabase
+          .from('vendors')
+          .insert({
+            id: TEST_VENDOR_ID,
+            user_id: '11111111-1111-1111-1111-111111111111',
+            name: 'Test Vendor'
+          } as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+
+        if (error) {
+          console.error('Error creating vendor:', error)
+        }
+      }
+      
+      setVendorReady(true)
+    } catch (error) {
+      console.error('Vendor initialization error:', error)
+      setVendorReady(true) // Continue anyway
+    }
+  }
 
   const loadTasks = useCallback(async () => {
     const { data: tasksData } = await supabase
@@ -81,10 +118,24 @@ export default function DashboardTestPage() {
   }, [loadTasks])
 
   useEffect(() => {
-    loadTasks()
-    const cleanup = subscribeToRealtime()
-    return cleanup
-  }, [loadTasks, subscribeToRealtime, refreshKey])
+    if (vendorReady) {
+      loadTasks()
+      const cleanup = subscribeToRealtime()
+      return cleanup
+    }
+  }, [loadTasks, subscribeToRealtime, refreshKey, vendorReady])
+
+  if (!vendorReady) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-navy-50">
+        <div className="text-center space-y-4">
+          <div className="text-4xl mb-4">🔧</div>
+          <h2 className="text-2xl font-bold text-navy-900">Setting Up Test Vendor...</h2>
+          <p className="text-navy-600">This will only take a moment</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-navy-50">

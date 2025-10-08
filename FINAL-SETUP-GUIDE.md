@@ -208,19 +208,11 @@ ON CONFLICT (handle) DO NOTHING;
 **Run this single script in Supabase SQL Editor:**
 
 ```sql
--- Complete setup for testing
+-- Disable RLS for testing (the app auto-creates vendor!)
 ALTER TABLE vendors DISABLE ROW LEVEL SECURITY;
 ALTER TABLE users_public DISABLE ROW LEVEL SECURITY;
 ALTER TABLE tasks DISABLE ROW LEVEL SECURITY;
 ALTER TABLE updates DISABLE ROW LEVEL SECURITY;
-
-INSERT INTO vendors (id, user_id, name)
-VALUES (
-  '00000000-0000-0000-0000-000000000001',
-  '11111111-1111-1111-1111-111111111111',
-  'Test Vendor'
-)
-ON CONFLICT (id) DO UPDATE SET name = 'Test Vendor';
 
 INSERT INTO users_public (handle, name)
 VALUES 
